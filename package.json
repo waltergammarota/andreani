@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/waltergammarota/andreani.git"
+    "url": "git+https://github.com/nchsala/andreani.git"
   },
   "author": "Ignacio Salaberria",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/waltergammarota/andreani/issues"
+    "url": "https://github.com/nchsala/andreani/issues"
   },
-  "homepage": "https://github.com/waltergammarota/andreani#readme",
+  "homepage": "https://github.com/nchsala/andreani#readme",
   "devDependencies": {
     "@types/chai": "^4.2.14",
     "@types/mocha": "^8.0.3",
