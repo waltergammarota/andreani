@@ -56,7 +56,7 @@ var querystring_1 = require("querystring");
 var Andreani = (function () {
     function Andreani(credentials) {
         var _this = this;
-        this.BASE_URL = "https://api.qa.andreani.com";
+        this.BASE_URL = process.env.NODE_ENV === "production" ? "https://apis.andreani.com" : "https://apisqa.andreani.com";
         this.LOGIN_URL = function () { return _this.BASE_URL + "/login"; };
         this.COT_ENV_URL = function (params) { return _this.BASE_URL + "/v1/tarifas?" + params; };
         this.OBT_ENV_URL = function (number) { return _this.BASE_URL + "/v1/envios/" + number; };
@@ -104,6 +104,16 @@ var Andreani = (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4, axios_1.default.get(url, this.configAuth).then(function (x) { return x.data; })];
+                    case 1: return [2, _a.sent()];
+                }
+            });
+        });
+    };
+    Andreani.prototype.getReqRaw = function (url) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, axios_1.default.get(url, __assign(__assign({}, this.configAuth), { responseType: "arraybuffer" })).then(function (x) { return x.data; })];
                     case 1: return [2, _a.sent()];
                 }
             });
@@ -164,7 +174,7 @@ var Andreani = (function () {
                             _loop_1(i);
                         }
                         Object.assign(params, flatBultos);
-                        queryParams = querystring_1.encode(params);
+                        queryParams = (0, querystring_1.encode)(params);
                         return [4, this.getReq(this.COT_ENV_URL(queryParams))];
                     case 1:
                         data = _a.sent();
@@ -193,7 +203,7 @@ var Andreani = (function () {
                 switch (_a.label) {
                     case 0:
                         buscaParams = params;
-                        queryParams = querystring_1.encode(buscaParams);
+                        queryParams = (0, querystring_1.encode)(buscaParams);
                         return [4, this.getReq(this.BUS_ENV_URL(queryParams))];
                     case 1:
                         data = _a.sent();
@@ -283,7 +293,7 @@ var Andreani = (function () {
             var data;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.getReq(this.OBT_ETQ_URL(remito))];
+                    case 0: return [4, this.getReqRaw(this.OBT_ETQ_URL(remito))];
                     case 1:
                         data = _a.sent();
                         return [2, data];

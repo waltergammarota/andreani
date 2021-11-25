@@ -27,6 +27,7 @@ export declare class Andreani {
     get isLogged(): boolean;
     private get encryptedCredentials();
     private getReq;
+    private getReqRaw;
     private postReq;
     private $login;
     private $cotizarEnvio;
