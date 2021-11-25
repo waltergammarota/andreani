@@ -15,7 +15,7 @@ export class Andreani {
     private USER: string
     private PASS: string
 
-    private BASE_URL = "https://api.qa.andreani.com"
+    private BASE_URL = process.env.NODE_ENV === "production" ? "https://apis.andreani.com" : "https://apisqa.andreani.com"
     private LOGIN_URL = () =>`${this.BASE_URL}/login`
     private COT_ENV_URL = ( params: string ) => `${this.BASE_URL}/v1/tarifas?${params}`
     private OBT_ENV_URL = ( number: string ) => `${this.BASE_URL}/v1/envios/${number}`
@@ -55,6 +55,9 @@ export class Andreani {
     private async getReq(url: string) {
         return await axios.get(url, this.configAuth).then( x => x.data )
     }
+    private async getReqRaw(url: string) {
+      return await axios.get(url, { ...this.configAuth, responseType: "arraybuffer"}).then( x => x.data )
+    }
 
     private async postReq(url: string, body: any) {
         return await axios.post(url, body, this.configAuth).then( x => x.data )
@@ -75,7 +78,7 @@ export class Andreani {
         pedido.cliente = this.CODIGO_CLIENTE
         if (destination == "SUCURSAL") pedido.contrato = this.CONTRATO_SUCURSAL
         else pedido.contrato = this.CONTRATO_DOMICILIO
-        
+
         let params: any = { ...pedido }
         delete params.bultos
 
@@ -135,7 +138,7 @@ export class Andreani {
     }
 
     private async $obtenerEtiqueta( remito: string ) {
-        const data = await this.getReq( this.OBT_ETQ_URL(remito) )
+        const data = await this.getReqRaw( this.OBT_ETQ_URL(remito) )
         return data
     }
 
